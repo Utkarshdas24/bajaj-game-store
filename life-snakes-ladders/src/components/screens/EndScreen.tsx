@@ -9,6 +9,7 @@ interface EndScreenProps {
     onPlayAgain?: () => void;
     onBookingSubmit?: (data: any) => void;
     stats?: { snakesLanded: string[]; snakesAvoided: string[]; laddersClimbed: string[]; };
+    totalShieldsUsed?: number;
 }
 
 const T = {
@@ -26,7 +27,7 @@ const T = {
     goldLight: '#FFFBEB',
 };
 
-const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobile, onCTA, onPlayAgain, onBookingSubmit, stats }) => {
+const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobile, onCTA, onPlayAgain, onBookingSubmit, stats, totalShieldsUsed = 0 }) => {
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [isStatsOpen, setIsStatsOpen] = useState(false);
 
@@ -35,9 +36,13 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
             ? new URL((import.meta as any).env.BASE_URL || './', window.location.href).href
             : '/';
 
+        const shareText = totalShieldsUsed > 0
+            ? `${playerName || 'I'} used ${totalShieldsUsed} shield${totalShieldsUsed > 1 ? 's' : ''}, try for yourself to know how many shields would you use?`
+            : `Check out Life Snakes & Ladders! Play the game and discover how prepared you are for your family\'s future.`;
+
         const shareData = {
             title: 'Life Snakes & Ladders',
-            text: 'Check out Life Snakes & Ladders! Play the game and discover how prepared you are for your family\'s future.',
+            text: shareText,
             url: appBaseUrl
         };
 
@@ -60,17 +65,18 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
 
     return (
         <div style={{
-            width: '100%', height: '100%',
+            width: '100%',
+            height: '100dvh', /* Changed to 100dvh */
             background: 'linear-gradient(to bottom, #192b5e 0%, #11204a 100%)',
             display: 'flex', flexDirection: 'column',
             overflowX: 'hidden', overflowY: 'auto',
-            alignItems: 'center', padding: '24px 20px 40px',
+            alignItems: 'center', padding: 'clamp(16px, 3vh, 24px) 20px clamp(24px, 5vh, 40px)',
             color: T.white, position: 'relative'
         }}>
             {/* Top Right Share Icon */}
             <button onClick={handleShare} style={{
-                position: 'absolute', top: 20, right: 20,
-                width: 36, height: 36, borderRadius: '50%',
+                position: 'absolute', top: 'max(16px, env(safe-area-inset-top))', right: 20,
+                width: 'clamp(32px, 5vh, 36px)', height: 'clamp(32px, 5vh, 36px)', borderRadius: '50%',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: T.white, cursor: 'pointer', zIndex: 10
@@ -79,30 +85,29 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
             </button>
 
             {/* Header */}
-            <div style={{ textAlign: 'center', marginBottom: 24, marginTop: 8 }}>
-                <p style={{ fontSize: 16, fontWeight: 900, color: '#FF7B00', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 6px' }}>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(12px, 3vh, 24px)', marginTop: 'clamp(4px, 1vh, 8px)' }}>
+                <p style={{ fontSize: 'clamp(14px, 2.5vh, 16px)', fontWeight: 900, color: '#FF7B00', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 6px' }}>
                     Hi {playerName || 'Username'}
                 </p>
-                <h1 style={{ fontSize: 22, fontWeight: 900, margin: 0, lineHeight: 1.2 }}>
-                    "{hasShield ? 'You Finished Strong — Because You Were Protected' : 'You Made It, But Luck Won\'t Always Help'}"
+                <h1 style={{ fontSize: 'clamp(18px, 3.5vh, 22px)', fontWeight: 900, margin: 0, lineHeight: 1.2 }}>
+                    {hasShield ? 'You Finished Strong — Because You Were Protected' : 'You Made It, But Luck Won\'t Always Help'}
                 </h1>
             </div>
 
             {/* Icon Graphic */}
             <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                margin: '0 auto 28px'
+                margin: '0 auto clamp(16px, 4vh, 28px)'
             }}>
                 {hasShield ? (
-                    <Trophy size={64} color={T.white} />
+                    <Trophy size={64} color={T.white} style={{ width: 'clamp(48px, 8vh, 64px)', height: 'clamp(48px, 8vh, 64px)' }} />
                 ) : (
-                    <AlertTriangle size={64} color="#FF7B00" />
+                    <AlertTriangle size={64} color="#FF7B00" style={{ width: 'clamp(48px, 8vh, 64px)', height: 'clamp(48px, 8vh, 64px)' }} />
                 )}
             </div>
 
-
             {/* Message Paragraph */}
-            <p style={{ fontSize: 14, color: T.white, margin: '0 0 24px', lineHeight: 1.5, textAlign: 'center', maxWidth: 400, fontWeight: 600 }}>
+            <p style={{ fontSize: 'clamp(12px, 2.2vh, 14px)', color: T.white, margin: '0 0 clamp(16px, 3.5vh, 24px)', lineHeight: 1.5, textAlign: 'center', maxWidth: 400, fontWeight: 600 }}>
                 {hasShield
                     ? "Risks are part of life - Protection keeps your family future secure"
                     : "Luck may save you in a game, but real life needs protection"}
@@ -115,8 +120,8 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
                     style={{
                         width: '100%',
                         maxWidth: 400,
-                        padding: '16px',
-                        marginBottom: 24,
+                        padding: 'clamp(12px, 2.5vh, 16px)',
+                        marginBottom: 'clamp(16px, 3vh, 24px)',
                         background: 'rgba(255,255,255,0.05)',
                         borderRadius: 12,
                         border: '1px solid rgba(255,255,255,0.1)',
@@ -124,7 +129,7 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         color: T.white,
-                        fontSize: 15,
+                        fontSize: 'clamp(13px, 2.5vh, 15px)',
                         fontWeight: 700,
                         cursor: 'pointer'
                     }}
@@ -249,12 +254,12 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
             )}
 
             {/* Buttons Area */}
-            <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vh, 12px)' }}>
                 {/* New Share Button replacing original CTA */}
                 <button onClick={handleShare} style={{
-                    width: '100%', padding: '15px 24px',
+                    width: '50%', maxWidth: '280px', margin: '0 auto', padding: 'clamp(12px, 2.2vh, 15px) 24px',
                     background: 'linear-gradient(135deg, #FF6600 0%, #E65C00 100%)',
-                    color: '#fff', fontSize: 16, fontWeight: 800,
+                    color: '#fff', fontSize: 'clamp(14px, 2.5vh, 16px)', fontWeight: 800,
                     borderRadius: '999px', border: 'none', cursor: 'pointer',
                     boxShadow: '0 4px 20px rgba(255,102,0,0.3)',
                 }}>
@@ -262,7 +267,7 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
                 </button>
 
                 {/* Subtext */}
-                <p style={{ fontSize: 15, color: T.white, textAlign: 'center', margin: '4px 0 8px', lineHeight: 1.5, fontWeight: 600 }}>
+                <p style={{ fontSize: 'clamp(13px, 2.4vh, 15px)', color: T.white, textAlign: 'center', margin: '4px 0 8px', lineHeight: 1.5, fontWeight: 600 }}>
                     {hasShield
                         ? "Just like in the game, the right protection can shield your family from life's uncertainties"
                         : "Don't leave your family's future to luck - secure it with the right life cover"}
@@ -270,9 +275,9 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
 
                 {/* Call Now Button */}
                 <button onClick={() => window.location.href = 'tel:18001234567'} style={{
-                    width: '100%', padding: '15px 24px',
-                    background: '#b8c2d1', // silver/light gray
-                    color: '#1A2340', fontSize: 16, fontWeight: 800,
+                    width: '100%', padding: 'clamp(12px, 2.5vh, 15px) 24px',
+                    background: '#22c55e', // green
+                    color: '#ffffff', fontSize: 'clamp(14px, 2.5vh, 16px)', fontWeight: 800,
                     borderRadius: '999px', border: 'none', cursor: 'pointer',
                 }}>
                     Call Now
@@ -280,19 +285,19 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
 
                 {/* Book a Slot Button */}
                 <button onClick={() => setShowBookingModal(true)} style={{
-                    width: '100%', padding: '15px 24px',
+                    width: '100%', padding: 'clamp(12px, 2.5vh, 15px) 24px',
                     background: '#1942b3', // dark blue
-                    color: '#fff', fontSize: 15, fontWeight: 800,
+                    color: '#fff', fontSize: 'clamp(13px, 2.5vh, 15px)', fontWeight: 800,
                     borderRadius: '999px', border: 'none', cursor: 'pointer',
                 }}>
                     Book a Slot
                 </button>
 
                 {/* Play Again text link */}
-                <div style={{ textAlign: 'center', marginTop: 24 }}>
+                <div style={{ textAlign: 'center', marginTop: 'clamp(12px, 3vh, 24px)' }}>
                     <button onClick={onPlayAgain} style={{
                         background: 'none', border: 'none', color: '#fff',
-                        fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                        fontSize: 'clamp(12px, 2.2vh, 14px)', fontWeight: 700, cursor: 'pointer',
                         textDecoration: 'none'
                     }}>
                         Play Again
@@ -300,8 +305,8 @@ const EndScreen: React.FC<EndScreenProps> = ({ hasShield, playerName, playerMobi
                 </div>
 
                 {/* Disclaimer */}
-                <div style={{ width: '100%', padding: '0 24px', opacity: 0.4, marginTop: 16 }}>
-                    <p style={{ fontSize: 8, color: '#fff', textAlign: 'center', fontWeight: 700, maxWidth: 380, margin: '0 auto', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
+                <div style={{ width: '100%', padding: '0 8px', opacity: 0.4, marginTop: 'clamp(8px, 2vh, 16px)' }}>
+                    <p style={{ fontSize: 'clamp(7px, 1.2vh, 8px)', color: '#fff', textAlign: 'center', fontWeight: 700, maxWidth: 380, margin: '0 auto', lineHeight: 1.4, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
                         <span style={{ opacity: 0.6, textDecoration: 'underline', marginRight: 4 }}>Disclaimer:</span> The results shown in this game are indicative and based solely on the information provided by the participant. They are intended for engagement and awareness purposes only and do not constitute financial advice or a recommendation to purchase any life insurance product. Participants should seek independent professional advice before making any financial or insurance decisions. While due care has been taken in designing the game, Bajaj Life Insurance Ltd. assumes no liability for its outcomes.
                     </p>
                 </div>

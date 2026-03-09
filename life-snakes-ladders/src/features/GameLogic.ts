@@ -42,6 +42,7 @@ export interface GameState {
         laddersClimbed: string[];
     };
     shieldBoughtOnCurrentTurn?: boolean;
+    totalShieldsUsed: number;
 }
 
 export const BOARD_SIZE = 100;

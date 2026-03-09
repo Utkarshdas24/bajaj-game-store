@@ -56,7 +56,7 @@ const LeadCaptureScreen: React.FC<LeadCaptureScreenProps> = ({ onSubmit }) => {
     const iconStyle: React.CSSProperties = { position: 'absolute', bottom: 13, left: 14, color: T.blue, opacity: 0.6, pointerEvents: 'none' };
 
     return (
-        <div style={{ width: '100%', height: '100%', background: T.bgPage, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+        <div style={{ width: '100%', height: '100dvh', background: T.bgPage, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
             {/* Header */}
             <div style={{ background: `linear-gradient(135deg, ${T.blue} 0%, ${T.blueDark} 100%)`, padding: '28px 24px 32px', color: '#fff', flexShrink: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>

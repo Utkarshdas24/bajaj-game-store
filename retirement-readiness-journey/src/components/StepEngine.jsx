@@ -7,7 +7,7 @@ const StepEngine = ({ step, selections, onSelect, stepIndex = 4 }) => {
     return (
         <div className="flex flex-col items-center justify-start w-full">
 
-            <div className="relative z-10 w-full max-w-md px-6 pt-12 pb-10">
+            <div className="relative z-10 w-full max-w-md px-6 py-4 flex flex-col items-center">
 
                 <div className="flex justify-center mb-6">
                     <div className="px-6 py-2 bg-blue-500 text-white rounded-full text-sm font-semibold shadow-md">
@@ -46,15 +46,17 @@ const StepEngine = ({ step, selections, onSelect, stepIndex = 4 }) => {
                                     onSelect(step.id, next);
                                 }}
                                 className={cn(
-                                    "flex items-center p-6 rounded-2xl bg-white/90 backdrop-blur-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all",
+                                    "flex items-center p-4 rounded-2xl bg-white/90 backdrop-blur-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all",
                                     isSelected && "ring-2 ring-blue-500"
                                 )}
                             >
-                                <img
-                                    src={option.image}
-                                    alt={option.label}
-                                    className="w-20 h-20 rounded-lg object-cover mr-5 shadow-sm flex-shrink-0"
-                                />
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50/50 rounded-lg flex items-center justify-center p-2 shadow-inner mr-4 flex-shrink-0">
+                                    <img
+                                        src={option.image}
+                                        alt={option.label}
+                                        className="max-h-full max-w-full object-contain"
+                                    />
+                                </div>
                                 <div className="flex-1">
                                     <h3 className="text-lg font-bold text-slate-900 leading-tight">
                                         {option.label}
@@ -64,8 +66,13 @@ const StepEngine = ({ step, selections, onSelect, stepIndex = 4 }) => {
                                     </p>
                                 </div>
 
-                                <div className="ml-2 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-400">
-                                    →
+                                <div className={cn(
+                                    "ml-2 w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-colors border-2",
+                                    isSelected
+                                        ? "bg-blue-500 border-blue-500 text-white shadow-sm"
+                                        : "bg-slate-50 border-slate-100 text-slate-300"
+                                )}>
+                                    {isSelected ? <span className="text-[10px] font-bold">✓</span> : <span className="text-[10px]">→</span>}
                                 </div>
                             </button>
                         );

@@ -80,8 +80,7 @@ const Intro = ({ onStart, setUserInfo, userInfo }) => {
                 backgroundImage: `url('./assets/Intro.png')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                minHeight: '100vh',
+                backgroundRepeat: 'no-repeat'
             }}
         >
             <div className="w-full flex justify-center pb-12">

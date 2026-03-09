@@ -17,7 +17,8 @@ const Results = lazy(() => import('./components/Results'));
 
 const App = () => {
     const { currentStep, currentStepIndex, totalSteps, actions, selections, score, insights, scoreBreakdown, userInfo } = useRetirementJourney();
-
+    const isIntro = currentStep.id === JOURNEY_STEPS.INTRO;
+    const isResults = currentStep.id === JOURNEY_STEPS.RESULTS;
     const renderStep = () => {
         switch (currentStep.id) {
             case JOURNEY_STEPS.INTRO:
@@ -58,7 +59,7 @@ const App = () => {
     return (
         <div
             className={cn(
-                "h-screen flex flex-col w-full overflow-hidden"
+                "h-[100dvh] flex flex-col w-full overflow-hidden"
             )}
             style={
                 isIntro ? {} :
@@ -76,9 +77,9 @@ const App = () => {
         >
             {/* Main Content */}
             <main className={cn(
-                "flex-1 flex flex-col w-full mx-auto",
-                isIntro ? "p-0 max-w-none" : "max-w-[48rem] px-6",
-                isResults ? "pt-[3.4rem] pb-0" : (isIntro ? "" : "py-12")
+                "flex-1 overflow-y-auto overflow-x-hidden min-h-0 flex flex-col w-full mx-auto pb-safe",
+                isIntro ? "p-0 max-w-none" : "max-w-[48rem] px-4",
+                isResults ? "pt-[1rem] pb-0" : (isIntro ? "" : "py-4")
             )}>
                 <AnimatePresence mode="wait">
                     <motion.div
@@ -87,7 +88,7 @@ const App = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
-                        className="flex-1 flex flex-col"
+                        className="flex-1 flex flex-col shrink-0"
                     >
                         <Suspense fallback={
                             <div className="flex-1 flex items-center justify-center">
@@ -107,7 +108,7 @@ const App = () => {
                         <Button
                             variant="outline"
                             onClick={actions.goToPrevStep}
-                            className="flex-1 h-[3.5rem] border-primary-500 text-primary-500 hover:bg-primary-50"
+                            className="flex-1 h-[3.5rem] bg-primary-50 border-primary-500 text-primary-500 hover:bg-primary-100"
                         >
                             BACK
                         </Button>

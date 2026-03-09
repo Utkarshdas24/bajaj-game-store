@@ -45,7 +45,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
     return (
         <div style={{
             width: '100%',
-            height: '100%',
+            height: '100dvh', /* Changed to 100dvh */
             display: 'flex',
             flexDirection: 'column',
             background: '#0a0f1e',
@@ -154,10 +154,9 @@ const GameScreen: React.FC<GameScreenProps> = ({
                         transition: isMoving
                             ? 'left 0.22s cubic-bezier(0.34,1.56,0.64,1), bottom 0.22s cubic-bezier(0.34,1.56,0.64,1)'
                             : 'none',
-                        zIndex: 10,
+                        zIndex: 15,
                         pointerEvents: 'none',
                     }}>
-                        {/* 2D Player Character */}
                         {/* 2D Player Character */}
                         <div style={{
                             position: 'relative',
@@ -170,16 +169,14 @@ const GameScreen: React.FC<GameScreenProps> = ({
                             marginBottom: -12 /* Better grounding for the larger character */
                         }}>
                             <img
-                                src="./assets/player.png"
+                                src="./assets/pawn-player.png"
                                 alt="Player"
                                 style={{
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'contain',
                                     display: 'block',
-                                    /* Aggressive blending/filter to remove white background exactly */
-                                    mixBlendMode: 'multiply',
-                                    filter: 'contrast(1.2) brightness(1.05)'
+                                    filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))'
                                 }}
                             />
                         </div>
@@ -199,8 +196,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
             {/* ── Controls ── */}
             <div style={{
                 flexShrink: 0,
-                padding: '10px 16px',
-                paddingBottom: 'max(14px, env(safe-area-inset-bottom, 14px))',
+                padding: 'clamp(8px, 2vh, 12px) 16px',
+                paddingBottom: 'max(clamp(10px, 2vh, 14px), env(safe-area-inset-bottom, 14px))',
                 background: 'linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.70) 100%)',
                 display: 'flex',
                 flexDirection: 'column',

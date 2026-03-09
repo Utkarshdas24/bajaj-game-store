@@ -9,7 +9,7 @@ const StepScenario = ({ step, selections, onSelect, stepIndex = 1 }) => {
             className="flex flex-col items-center justify-start w-full"
         >
 
-            <div className="relative z-10 w-full max-w-md px-4 pt-6 pb-4 flex flex-col items-center">
+            <div className="relative z-10 w-full max-w-md px-4 py-2 flex flex-col items-center">
 
                 {/* Step Badge */}
                 <div className="mb-3">
@@ -55,7 +55,7 @@ const StepScenario = ({ step, selections, onSelect, stepIndex = 1 }) => {
                                         : "hover:bg-white"
                                 )}
                             >
-                                <div className="h-24 w-full overflow-hidden p-3 flex items-center justify-center bg-slate-50/50">
+                                <div className="h-20 sm:h-24 w-full overflow-hidden p-3 flex items-center justify-center bg-slate-50/50">
                                     <img
                                         src={option.image}
                                         alt={option.label}

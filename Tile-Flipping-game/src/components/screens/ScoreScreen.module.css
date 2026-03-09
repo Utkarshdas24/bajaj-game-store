@@ -1,7 +1,6 @@
 .scoreScreen {
     background: linear-gradient(160deg, #0B1E52 0%, #1E3B8A 55%, #1A3070 100%);
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     height: 100dvh;
     width: 100%;
     display: flex;
@@ -10,11 +9,11 @@
 
 .inner {
     position: relative;
-    padding: max(10px, env(safe-area-inset-top)) 10px 10px;
+    padding: max(6px, env(safe-area-inset-top)) 10px 6px;
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     max-width: 450px;
@@ -22,7 +21,8 @@
 }
 
 .header {
-    margin-bottom: clamp(8px, 2dvh, 24px);
+    margin-bottom: clamp(2px, 1dvh, 12px);
+    margin-top: clamp(12px, 2.5dvh, 24px);
     text-align: center;
     width: 100%;
 }
@@ -54,7 +54,7 @@
 
 /* ---- RING ---- */
 .ringWrap {
-    margin-bottom: clamp(8px, 2dvh, 20px);
+    margin-bottom: clamp(4px, 1dvh, 12px);
     display: flex;
     justify-content: center;
     flex-shrink: 1;
@@ -125,7 +125,7 @@
     display: flex;
     gap: clamp(6px, 1.5vw, 12px);
     width: 100%;
-    margin-bottom: clamp(8px, 2dvh, 20px);
+    margin-bottom: clamp(4px, 1dvh, 12px);
 }
 
 .statCard {
@@ -156,7 +156,7 @@
 
 /* ---- MESSAGE ---- */
 .messagebox {
-    margin: clamp(4px, 1dvh, 12px) 0 clamp(8px, 2dvh, 24px);
+    margin: clamp(2px, 0.5dvh, 8px) 0 clamp(4px, 1dvh, 16px);
     display: flex;
     flex-direction: column;
     gap: clamp(4px, 0.8dvh, 6px);
@@ -202,10 +202,10 @@
 
 .shareBtnTop {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
+    top: max(8px, env(safe-area-inset-top));
+    right: 12px;
+    width: clamp(28px, 4dvh, 36px);
+    height: clamp(28px, 4dvh, 36px);
     border-radius: 50%;
     border: 1.5px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.08);
@@ -288,4 +288,30 @@
     color: rgba(255, 255, 255, 0.6);
     text-decoration: underline;
     margin-right: 4px;
+}
+
+.shareBtnWrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.shareBtnSmall {
+    width: 60% !important;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.callNowBtn {
+    background: #059669 !important;
+    /* emerald-600 */
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4) !important;
+}
+
+.callNowBtn:hover {
+    background: #047857 !important;
+    /* emerald-700 */
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5) !important;
 }

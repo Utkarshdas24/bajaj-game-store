@@ -165,15 +165,17 @@ export default function ScoreScreen({ showToast }) {
 
                     {/* Actions */}
                     <div className={styles.actions}>
-                        <Button variant="primary" fullWidth onClick={handleShare} id="btn-share-main">
-                            &nbsp; Share
-                        </Button>
+                        <div className={styles.shareBtnWrap}>
+                            <Button variant="primary" fullWidth onClick={handleShare} id="btn-share-main" className={styles.shareBtnSmall}>
+                                &nbsp; Share
+                            </Button>
+                        </div>
 
                         <p className={styles.cta}>
                             {scenarioData.cta}
                         </p>
 
-                        <Button variant="outline" fullWidth onClick={() => window.location.href = 'tel:18001234567'} id="btn-call-now" className={styles.secondaryBtn}>
+                        <Button variant="outline" fullWidth onClick={() => window.location.href = 'tel:18001234567'} id="btn-call-now" className={styles.callNowBtn}>
                             &nbsp; Call Now
                         </Button>
                         <Button variant="secondary" fullWidth onClick={() => setShowLeadModal(true)} id="btn-book-slot">
