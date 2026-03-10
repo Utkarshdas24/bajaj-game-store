@@ -4,6 +4,7 @@ import { Undo2, RotateCcw, Timer } from 'lucide-react';
 import Tube from './Tube';
 import ProgressBar from '../../../components/ui/ProgressBar';
 import ReferencePanel from './ReferencePanel';
+import { CATEGORY_CONFIG } from '../constants/categoryConfig';
 
 const GameScreen = ({
     tubes,
@@ -22,10 +23,13 @@ const GameScreen = ({
     pouringState,
     tubeRefs
 }) => {
+    // Map categories to indices for labels (assuming first 5 are active, last 2 are empty)
+    const categoryMapping = ['growth', 'safety', 'resp', 'risk', 'asset'];
+
     return (
-        <div className="w-full h-full flex flex-col items-center pt-10">
+        <div className="w-full h-full flex flex-col items-center pt-2">
             {/* Top Fixed Timer HUD */}
-            <div className="fixed top-4 left-0 right-0 z-50 flex flex-col items-center pb-2">
+            <div className="fixed top-2 left-0 right-0 z-50 flex flex-col items-center">
                 <div className="flex items-center gap-2 mb-1">
                     <Timer className={`${isUrgent ? 'text-risk animate-pulse' : 'text-teal'} w-5 h-5`} />
                     <span className={`text-2xl font-mono font-bold tracking-wider ${isUrgent ? 'text-risk' : 'text-white'}`}>
@@ -37,50 +41,78 @@ const GameScreen = ({
                 </div>
             </div>
 
-            {/* Level & Move Stats (Floating) */}
-            <div className="w-full max-w-md flex justify-between px-8 mb-12 mt-12 animate-fade-in">
-                <div className="flex flex-col items-start">
-                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Level</span>
-                    <div className="flex items-center gap-2">
-                        <span className="text-2xl font-black text-gold drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">{currentLevel}</span>
-                        <div className="h-1 w-4 bg-gold/20 rounded-full" />
-                    </div>
-                </div>
-                <div className="flex flex-col items-end">
-                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Moves</span>
-                    <div className="flex items-center gap-2">
-                        <div className="h-1 w-4 bg-white/10 rounded-full" />
-                        <span className="text-2xl font-black text-white">{moves}</span>
-                    </div>
-                </div>
+            {/* Reference Panel at the TOP */}
+            <div className="mt-16 w-full flex justify-center">
+                <ReferencePanel activeCategories={activeCategories} />
             </div>
 
-            {/* Game Board - Scaled Up Tubes */}
-            <div className="relative w-full flex flex-wrap justify-center gap-x-6 gap-y-16 max-w-md mx-auto py-4">
-                {tubes.map((segments, index) => (
-                    <div
-                        key={index}
-                        ref={el => tubeRefs.current[index] = el}
-                    >
-                        <Tube
-                            index={index}
-                            segments={segments}
-                            capacity={capacity}
-                            isSelected={selectedTube === index}
-                            onClick={onTubeClick}
-                            isValidTarget={selectedTube !== null && selectedTube !== index}
-                            isPouring={pouringState?.sourceIndex === index}
-                            isBeingPouredInto={pouringState?.targetIndex === index}
-                            pouringState={pouringState}
-                            tiltDirection={pouringState ? (pouringState.targetIndex > pouringState.sourceIndex ? 'right' : 'left') : 'right'}
-                            pourOffset={pouringState?.sourceIndex === index ? { x: pouringState.dx, y: pouringState.dy } : null}
-                        />
-                    </div>
-                ))}
+            {/* Game Board - 5+2 Layout */}
+            <div className="relative w-full flex flex-col items-center gap-12 mt-12 mb-8 animate-fade-in px-4">
+                {/* Active Tubes (Row 1) */}
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-12 max-w-4xl">
+                    {tubes.slice(0, 5).map((segments, index) => {
+                        const catKey = categoryMapping[index];
+                        const config = CATEGORY_CONFIG[catKey];
+                        return (
+                            <div key={index} className="flex flex-col items-center gap-4">
+                                <div ref={el => tubeRefs.current[index] = el}>
+                                    <Tube
+                                        index={index}
+                                        segments={segments}
+                                        capacity={capacity}
+                                        isSelected={selectedTube === index}
+                                        onClick={onTubeClick}
+                                        isValidTarget={selectedTube !== null && selectedTube !== index}
+                                        isPouring={pouringState?.sourceIndex === index}
+                                        isBeingPouredInto={pouringState?.targetIndex === index}
+                                        pouringState={pouringState}
+                                        tiltDirection={pouringState ? (pouringState.targetIndex > pouringState.sourceIndex ? 'right' : 'left') : 'right'}
+                                        pourOffset={pouringState?.sourceIndex === index ? { x: pouringState.dx, y: pouringState.dy } : null}
+                                    />
+                                </div>
+                                <div className="flex flex-col items-center gap-1">
+                                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: config.color }} />
+                                    <span className="text-[0.7rem] font-black tracking-[0.2em]" style={{ color: config.color }}>
+                                        {config.label}
+                                    </span>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* Empty Tubes (Row 2) */}
+                <div className="flex justify-center gap-x-4">
+                    {tubes.slice(5, 7).map((segments, index) => {
+                        const tubeIndex = index + 5;
+                        return (
+                            <div key={tubeIndex} className="flex flex-col items-center gap-4">
+                                <div ref={el => tubeRefs.current[tubeIndex] = el}>
+                                    <Tube
+                                        index={tubeIndex}
+                                        segments={segments}
+                                        capacity={capacity}
+                                        isSelected={selectedTube === tubeIndex}
+                                        onClick={onTubeClick}
+                                        isValidTarget={selectedTube !== null && selectedTube !== tubeIndex}
+                                        isPouring={pouringState?.sourceIndex === tubeIndex}
+                                        isBeingPouredInto={pouringState?.targetIndex === tubeIndex}
+                                        pouringState={pouringState}
+                                        tiltDirection={pouringState ? (pouringState.targetIndex > pouringState.sourceIndex ? 'right' : 'left') : 'right'}
+                                        pourOffset={pouringState?.sourceIndex === tubeIndex ? { x: pouringState.dx, y: pouringState.dy } : null}
+                                    />
+                                </div>
+                                <span className="text-[0.7rem] font-bold text-white/30 tracking-[0.2em] mt-1 uppercase">
+                                    Empty
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-4 mt-8 animate-fade-in">
+            <div className="flex items-center gap-4 animate-fade-in mb-10">
                 <button
                     onClick={onUndo}
                     className="w-12 h-12 rounded-full glass-button flex items-center justify-center text-white/70 hover:text-white"
@@ -96,9 +128,6 @@ const GameScreen = ({
                     <RotateCcw size={28} />
                 </button>
             </div>
-
-            {/* Reference */}
-            <ReferencePanel activeCategories={activeCategories} />
         </div>
     );
 };
