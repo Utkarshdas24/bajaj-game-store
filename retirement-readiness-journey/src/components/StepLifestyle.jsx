@@ -9,7 +9,7 @@ const StepLifestyle = ({ step, selections, onSelect, stepIndex = 2 }) => {
             className="flex flex-col items-center justify-start w-full"
         >
 
-            <div className="relative z-10 w-full max-w-md px-6 pt-12 pb-10 flex flex-col items-center">
+            <div className="relative z-10 w-full max-w-md px-6 py-4 flex flex-col items-center">
 
                 {/* Step Badge */}
                 <div className="mb-6">
@@ -48,18 +48,20 @@ const StepLifestyle = ({ step, selections, onSelect, stepIndex = 2 }) => {
                                 key={option.id}
                                 onClick={() => onSelect(step.id, option.id)}
                                 className={cn(
-                                    "flex items-center p-6 rounded-2xl transition-all duration-300 text-left",
+                                    "flex items-center p-4 rounded-2xl transition-all duration-300 text-left",
                                     "bg-white/90 backdrop-blur-xl shadow-lg hover:shadow-xl hover:-translate-y-1",
                                     isSelected
                                         ? "ring-2 ring-blue-500"
                                         : "hover:bg-white"
                                 )}
                             >
-                                <img
-                                    src={option.image}
-                                    alt={option.label}
-                                    className="w-20 h-20 rounded-lg object-cover mr-5 shadow-sm flex-shrink-0"
-                                />
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50/50 rounded-lg flex items-center justify-center p-2 shadow-inner mr-4 flex-shrink-0">
+                                    <img
+                                        src={option.image}
+                                        alt={option.label}
+                                        className="max-h-full max-w-full object-contain"
+                                    />
+                                </div>
                                 <div className="flex-1">
                                     <h3 className="text-lg font-bold text-slate-900 leading-tight">
                                         {option.label}
@@ -69,16 +71,13 @@ const StepLifestyle = ({ step, selections, onSelect, stepIndex = 2 }) => {
                                     </p>
                                 </div>
 
-                                <div className="ml-2 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-400">
-                                    <svg
-                                        className="w-4 h-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2.5"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                                    </svg>
+                                <div className={cn(
+                                    "ml-2 w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-colors border-2",
+                                    isSelected
+                                        ? "bg-blue-500 border-blue-500 text-white shadow-sm"
+                                        : "bg-slate-50 border-slate-100 text-slate-300"
+                                )}>
+                                    {isSelected ? <span className="text-[10px] font-bold">✓</span> : <span className="text-[10px]">→</span>}
                                 </div>
                             </button>
                         );

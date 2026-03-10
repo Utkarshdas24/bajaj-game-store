@@ -7,7 +7,7 @@ const StepEssentials = ({ step, selections, onSelect, stepIndex = 3 }) => {
     return (
         <div className="flex flex-col items-center justify-start w-full">
 
-            <div className="relative z-10 w-full max-w-md px-4 pt-4 pb-4">
+            <div className="relative z-10 w-full max-w-md px-4 py-2 flex flex-col items-center">
 
                 <div className="flex justify-center mb-6">
                     <div className="px-6 py-2 bg-blue-500 text-white rounded-full text-sm font-semibold">
@@ -52,7 +52,7 @@ const StepEssentials = ({ step, selections, onSelect, stepIndex = 3 }) => {
                                     isSelected && "ring-2 ring-blue-500 bg-blue-50/90"
                                 )}
                             >
-                                <div className="w-16 h-16 bg-slate-50/50 rounded-xl flex items-center justify-center p-2 flex-shrink-0 shadow-inner">
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50/50 rounded-xl flex items-center justify-center p-2 flex-shrink-0 shadow-inner">
                                     <img
                                         src={option.image}
                                         alt={option.label}

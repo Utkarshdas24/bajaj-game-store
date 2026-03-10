@@ -50,11 +50,11 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
 
     const inputStyle = (hasError?: boolean): React.CSSProperties => ({
         width: '100%',
-        padding: '14px 16px',
+        padding: 'clamp(10px, 2.5vh, 14px) 16px',
         background: hasError ? T.errorLight : T.white,
         border: `1.5px solid ${hasError ? T.error : T.border}`,
         borderRadius: 8,
-        fontSize: 15,
+        fontSize: 'clamp(13px, 2.5vh, 15px)',
         color: T.text,
         outline: 'none',
         fontFamily: 'inherit',
@@ -78,14 +78,15 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
             <div
                 style={{
                     width: '100%', maxWidth: 360,
+                    maxHeight: '100dvh', // keep within viewport bounds
                     background: T.white,
                     borderRadius: 16,
                     border: `4px solid ${T.blue}`,
-                    overflow: 'hidden',
+                    overflowY: 'auto', // allow scroll if content exceeds maxHeight
                     boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
                     animation: 'zoomIn 0.3s cubic-bezier(0.32,0.72,0,1)',
                     position: 'relative',
-                    padding: '32px 24px 24px',
+                    padding: 'clamp(24px, 4vh, 32px) 24px clamp(16px, 3vh, 24px)',
                 }}
                 onClick={e => e.stopPropagation()}
             >
@@ -103,14 +104,14 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                 </button>
 
                 {/* Avatar Icon */}
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'clamp(8px, 2vh, 16px)' }}>
                     <div style={{
-                        width: 72, height: 72,
+                        width: 'clamp(48px, 10vh, 72px)', height: 'clamp(48px, 10vh, 72px)',
                         background: T.blue,
                         borderRadius: '50%',
                         border: '4px solid #fff',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 32,
+                        fontSize: 'clamp(24px, 5vh, 32px)',
                         boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                     }}>
                         👋
@@ -118,20 +119,20 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                 </div>
 
                 {/* Header Text */}
-                <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                    <h2 style={{ fontSize: 26, fontWeight: 900, color: T.blue, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
+                <div style={{ textAlign: 'center', marginBottom: 'clamp(12px, 3vh, 24px)' }}>
+                    <h2 style={{ fontSize: 'clamp(20px, 4vh, 26px)', fontWeight: 900, color: T.blue, margin: '0 0 8px', letterSpacing: '-0.02em' }}>
                         {isBooking ? 'Book a Slot' : 'Welcome!'}
                     </h2>
-                    <p style={{ fontSize: 16, color: T.muted, margin: 0, fontWeight: 500 }}>
+                    <p style={{ fontSize: 'clamp(14px, 2.5vh, 16px)', color: T.muted, margin: 0, fontWeight: 500 }}>
                         {isBooking ? 'Select a time for our advisor to connect with you.' : 'Enter your details to start.'}
                     </p>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vh, 16px)' }}>
                     {/* Name */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        <label style={{ fontSize: 12, fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(4px, 1vh, 8px)' }}>
+                        <label style={{ fontSize: 'clamp(10px, 2vh, 12px)', fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Your Name
                         </label>
                         <div>
@@ -150,8 +151,8 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                     </div>
 
                     {/* Mobile */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        <label style={{ fontSize: 12, fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(4px, 1vh, 8px)' }}>
+                        <label style={{ fontSize: 'clamp(10px, 2vh, 12px)', fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Mobile Number
                         </label>
                         <div>
@@ -170,51 +171,52 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                         {errors.mobile && <p style={{ fontSize: 12, color: T.error, margin: 0 }}>{errors.mobile}</p>}
                     </div>
 
-                    {/* Preferred Date (Booking mode only) */}
+                    {/* Preferred Date and Time (Booking mode only) */}
                     {isBooking && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label style={{ fontSize: 12, fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                Preferred Date
-                            </label>
-                            <div>
-                                <input
-                                    type="date"
-                                    value={preferredDate}
-                                    style={inputStyle(false)}
-                                    // Set min date to today
-                                    min={new Date().toISOString().split('T')[0]}
-                                    onChange={e => setPreferredDate(e.target.value)}
-                                />
+                        <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 16px)' }}>
+                            {/* Date */}
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(4px, 1vh, 8px)' }}>
+                                <label style={{ fontSize: 'clamp(10px, 2vh, 12px)', fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Date
+                                </label>
+                                <div>
+                                    <input
+                                        type="date"
+                                        value={preferredDate}
+                                        style={{ ...inputStyle(false), padding: 'clamp(10px, 2.5vh, 14px) 8px' }}
+                                        // Set min date to today
+                                        min={new Date().toISOString().split('T')[0]}
+                                        onChange={e => setPreferredDate(e.target.value)}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    )}
 
-                    {/* Preferred Time (Booking mode only) */}
-                    {isBooking && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            <label style={{ fontSize: 12, fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                Preferred Time Slot
-                            </label>
-                            <div>
-                                <select
-                                    value={preferredTime}
-                                    onChange={(e) => setPreferredTime(e.target.value)}
-                                    style={inputStyle(false)}
-                                >
-                                    <option value="">Select Slot</option>
-                                    <option value="08:00 AM - 09:00 AM">08:00 AM - 09:00 AM</option>
-                                    <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
-                                    <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
-                                    <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
-                                    <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
-                                    <option value="01:00 PM - 02:00 PM">01:00 PM - 02:00 PM</option>
-                                    <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
-                                    <option value="03:00 PM - 04:00 PM">03:00 PM - 04:00 PM</option>
-                                    <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
-                                    <option value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</option>
-                                    <option value="06:00 PM - 07:00 PM">06:00 PM - 07:00 PM</option>
-                                    <option value="07:00 PM - 08:00 PM">07:00 PM - 08:00 PM</option>
-                                </select>
+                            {/* Time Slot */}
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(4px, 1vh, 8px)' }}>
+                                <label style={{ fontSize: 'clamp(10px, 2vh, 12px)', fontWeight: 800, color: T.textBold, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Time Slot
+                                </label>
+                                <div>
+                                    <select
+                                        value={preferredTime}
+                                        onChange={(e) => setPreferredTime(e.target.value)}
+                                        style={{ ...inputStyle(false), padding: 'clamp(10px, 2.5vh, 14px) 8px' }}
+                                    >
+                                        <option value="">Select Time</option>
+                                        <option value="08:00 AM - 09:00 AM">08:00 - 09:00 AM</option>
+                                        <option value="09:00 AM - 10:00 AM">09:00 - 10:00 AM</option>
+                                        <option value="10:00 AM - 11:00 AM">10:00 - 11:00 AM</option>
+                                        <option value="11:00 AM - 12:00 PM">11:00 - 12:00 PM</option>
+                                        <option value="12:00 PM - 01:00 PM">12:00 - 01:00 PM</option>
+                                        <option value="01:00 PM - 02:00 PM">01:00 - 02:00 PM</option>
+                                        <option value="02:00 PM - 03:00 PM">02:00 - 03:00 PM</option>
+                                        <option value="03:00 PM - 04:00 PM">03:00 - 04:00 PM</option>
+                                        <option value="04:00 PM - 05:00 PM">04:00 - 05:00 PM</option>
+                                        <option value="05:00 PM - 06:00 PM">05:00 - 06:00 PM</option>
+                                        <option value="06:00 PM - 07:00 PM">06:00 - 07:00 PM</option>
+                                        <option value="07:00 PM - 08:00 PM">07:00 - 08:00 PM</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -238,9 +240,9 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                             >
                                 {termsAccepted && <Check size={14} color="#fff" strokeWidth={3} />}
                             </div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: T.text, lineHeight: 1.5, textAlign: 'left' }}>
+                            <div style={{ fontSize: 'clamp(11px, 2.2vh, 13px)', fontWeight: 700, color: T.text, lineHeight: 1.5, textAlign: 'left' }}>
                                 I agree to the{' '}
-                                <button type="button" onClick={() => setShowTerms(true)} style={{ background: 'none', border: 'none', color: T.blue, fontWeight: 700, fontSize: 13, cursor: 'pointer', padding: 0, textDecoration: 'underline' }}>
+                                <button type="button" onClick={() => setShowTerms(true)} style={{ background: 'none', border: 'none', color: T.blue, fontWeight: 700, fontSize: 'clamp(11px, 2.2vh, 13px)', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}>
                                     Terms & Conditions
                                 </button>{' '}
                                 and allow Bajaj Life Insurance to contact me even if registered on DND.
@@ -254,12 +256,12 @@ const LeadModal: React.FC<LeadModalProps> = ({ onClose, onSubmit, isBooking = fa
                         disabled={!name.trim() || mobile.length !== 10 || !termsAccepted || isSubmitting || (isBooking && (!preferredTime || !preferredDate))}
                         style={{
                             width: '100%',
-                            padding: '14px',
+                            padding: 'clamp(12px, 2.5vh, 14px)',
                             background: (!name.trim() || mobile.length !== 10 || !termsAccepted || isSubmitting || (isBooking && (!preferredTime || !preferredDate))) ? T.blueSoft : T.blue,
                             opacity: (!name.trim() || mobile.length !== 10 || !termsAccepted || isSubmitting || (isBooking && (!preferredTime || !preferredDate))) ? 0.6 : 1,
                             color: '#fff',
                             fontFamily: 'inherit',
-                            fontSize: 16,
+                            fontSize: 'clamp(14px, 2.5vh, 16px)',
                             fontWeight: 700,
                             border: 'none',
                             borderRadius: 12,

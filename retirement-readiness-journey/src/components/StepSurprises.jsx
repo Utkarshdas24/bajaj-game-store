@@ -49,8 +49,8 @@ const StepSurprises = ({ step, selections, onSelect, stepIndex = 5 }) => {
     const category = categories[currentSubStep];
 
     return (
-        <div className="flex flex-col items-center justify-start w-full min-h-[60vh]">
-            <div className="relative z-10 w-full max-w-md px-6 pt-12 pb-10 flex flex-col items-center overflow-hidden">
+        <div className="flex flex-col items-center justify-start w-full">
+            <div className="relative z-10 w-full max-w-md px-6 py-4 flex flex-col items-center overflow-hidden">
 
                 {/* Step Header & Progress */}
                 <div className="flex flex-col items-center w-full mb-6">
@@ -108,26 +108,26 @@ const StepSurprises = ({ step, selections, onSelect, stepIndex = 5 }) => {
                             }}
                             className="w-full"
                         >
-                            <div className="bg-white rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-50 relative overflow-hidden">
+                            <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-50 relative overflow-hidden">
                                 {/* Decorative elements */}
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-50 shrink-0" />
 
                                 <div className="relative z-10">
-                                    <div className="flex flex-col items-center text-center mb-8">
-                                        <div className="w-20 h-20 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl flex items-center justify-center text-4xl mb-4 shadow-sm border-2 border-white">
+                                    <div className="flex flex-col items-center text-center mb-5 sm:mb-8">
+                                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl flex items-center justify-center text-3xl sm:text-4xl mb-3 sm:mb-4 shadow-sm border-2 border-white">
                                             {category.icon}
                                         </div>
                                         <div>
-                                            <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2">
+                                            <h3 className="text-lg sm:text-xl font-black text-slate-800 uppercase tracking-tight mb-1 sm:mb-2">
                                                 {category.title}
                                             </h3>
-                                            <p className="text-[13px] text-slate-500 font-bold leading-relaxed px-4">
+                                            <p className="text-[12px] sm:text-[13px] text-slate-500 font-bold leading-relaxed px-2 sm:px-4">
                                                 {category.description}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-3">
+                                    <div className="space-y-2.5 sm:space-y-3">
                                         {category.options.map((option) => {
                                             const isSelected = currentSelections[category.id] === option.id;
                                             return (
@@ -135,13 +135,13 @@ const StepSurprises = ({ step, selections, onSelect, stepIndex = 5 }) => {
                                                     key={option.id}
                                                     onClick={() => handleSubSelect(category.id, option.id)}
                                                     className={cn(
-                                                        "w-full flex items-center p-4 rounded-2xl border-2 transition-all text-left relative group",
+                                                        "w-full flex items-center p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all text-left relative group",
                                                         isSelected
                                                             ? "border-blue-500 bg-blue-50/50"
                                                             : "border-slate-100 bg-slate-50/50 hover:border-blue-200"
                                                     )}
                                                 >
-                                                    <div className="w-10 h-10 rounded-xl overflow-hidden mr-3 shadow-sm flex-shrink-0 border-2 border-white bg-white">
+                                                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[0.5rem] sm:rounded-xl overflow-hidden mr-2.5 sm:mr-3 shadow-sm flex-shrink-0 border-2 border-white bg-white">
                                                         <img
                                                             src={option.image}
                                                             alt={option.label}

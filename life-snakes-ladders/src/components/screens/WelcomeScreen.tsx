@@ -15,7 +15,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
                     position: 'fixed',
                     inset: 0,
                     width: '100%',
-                    height: '100%',
+                    height: '100dvh', /* Changed to 100dvh */
                     background: '#0a0f1e',
                     display: 'flex',
                     flexDirection: 'column',

@@ -50,7 +50,8 @@ const App: React.FC<AppProps> = ({
         playerMobile: undefined,
         frozenSnakes: [],
         stats: { snakesLanded: [], snakesAvoided: [], laddersClimbed: [] },
-        shieldBoughtOnCurrentTurn: false
+        shieldBoughtOnCurrentTurn: false,
+        totalShieldsUsed: 0
     });
 
     const movementTimeoutRef = useRef<number | null>(null);
@@ -237,7 +238,8 @@ const App: React.FC<AppProps> = ({
                 currentScreen: 'game',
                 frozenSnakes: currentFrozenSnakes,
                 message: 'Term Shield added! Snake frozen.',
-                shieldBoughtOnCurrentTurn: false // Reset here since we're closing
+                shieldBoughtOnCurrentTurn: false, // Reset here since we're closing
+                totalShieldsUsed: prev.totalShieldsUsed + 1
             };
         });
     };
@@ -280,7 +282,8 @@ const App: React.FC<AppProps> = ({
             playerMobile: prev.playerMobile,
             frozenSnakes: [],
             stats: { snakesLanded: [], snakesAvoided: [], laddersClimbed: [] },
-            shieldBoughtOnCurrentTurn: false
+            shieldBoughtOnCurrentTurn: false,
+            totalShieldsUsed: 0
         }));
     };
 
@@ -300,7 +303,8 @@ const App: React.FC<AppProps> = ({
             playerMobile: prev.playerMobile,
             frozenSnakes: [],
             stats: { snakesLanded: [], snakesAvoided: [], laddersClimbed: [] },
-            shieldBoughtOnCurrentTurn: false
+            shieldBoughtOnCurrentTurn: false,
+            totalShieldsUsed: 0
         }));
     };
 
@@ -365,6 +369,7 @@ const App: React.FC<AppProps> = ({
                     onPlayAgain={handlePlayAgain}
                     onBookingSubmit={handleBookingSubmit}
                     stats={gameState.stats}
+                    totalShieldsUsed={gameState.totalShieldsUsed}
                 />
             );
 
