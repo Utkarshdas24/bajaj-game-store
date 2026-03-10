@@ -42,12 +42,12 @@ const Tube = ({
             }}
             onClick={() => onClick(index)}
             className={`
-        relative w-[3rem] h-[13rem] flex flex-col-reverse
-        glass-tube cursor-pointer transition-shadow duration-300
-        ${isSelected ? 'ring-[3px] ring-gold/40 shadow-[0_0_20px_rgba(244,211,94,0.3)]' : ''}
-        ${isValidTarget ? 'ring-[3px] ring-teal/30' : ''}
-        ${isSorted ? 'sorted-tube ring-[3px] ring-gold shadow-[0_0_30px_rgba(244,211,94,0.4)]' : ''}
-      `}
+                relative w-[4.5rem] h-[14rem] flex flex-col-reverse
+                glass-tube cursor-pointer transition-all duration-300
+                ${isSelected ? 'ring-[3px] ring-gold shadow-[0_0_25px_rgba(245,200,66,0.4)] z-50' : 'border border-white/10'}
+                ${isValidTarget ? 'ring-[3px] ring-teal-400/50 animate-pulse-border shadow-[0_0_15px_rgba(45,212,191,0.3)]' : ''}
+                ${isSorted ? 'sorted-tube ring-[3px] ring-green-500 shadow-[0_0_30px_rgba(34,197,94,0.4)]' : ''}
+            `}
         >
 
 

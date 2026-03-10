@@ -211,12 +211,10 @@ const LifeSortedPage = () => {
 
     const onLevelComplete = () => {
         timer.stop();
-        // If it's the last level, go straight to final
-        if (currentLevelIndex >= LEVEL_CONFIGS.length - 1) {
-            setGamePhase('final');
-        } else {
+        // 400ms delay as requested
+        setTimeout(() => {
             setGamePhase('report');
-        }
+        }, 400);
     };
 
     React.useEffect(() => {
@@ -405,11 +403,10 @@ const LifeSortedPage = () => {
 
             {gamePhase === 'report' && (
                 <LevelReport
-                    level={currentLevelIndex + 1}
-                    moves={engine.moves}
-                    mistakes={engine.mistakes}
-                    sorted={engine.sortedCount}
-                    onNext={nextLevel}
+                    tubes={engine.tubes}
+                    isWin={engine.isWon}
+                    capacity={LEVEL_CONFIGS[currentLevelIndex].capacity}
+                    onNext={() => setGamePhase('final')}
                 />
             )}
 

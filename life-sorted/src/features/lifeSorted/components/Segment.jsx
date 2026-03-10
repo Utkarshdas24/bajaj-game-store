@@ -44,10 +44,10 @@ const Segment = ({
         >
 
 
-            {/* Label - Hidden during animation/tilt for clarity */}
+            {/* Emoji - Hidden during animation/tilt for clarity */}
             {!isBeingPoured && !isFilling && tiltAngle === 0 && (
-                <span className="relative z-10 text-[0.45rem] font-bold text-white/50 uppercase tracking-tighter select-none leading-none">
-                    {element.label}
+                <span className="relative z-10 text-lg select-none flex items-center justify-center">
+                    {element.emoji}
                 </span>
             )}
         </motion.div>
