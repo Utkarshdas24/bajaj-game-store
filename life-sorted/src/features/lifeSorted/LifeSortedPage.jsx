@@ -298,7 +298,7 @@ const LifeSortedPage = () => {
                     <h2 className="text-2xl font-black text-gray-800 mb-6 tracking-tight">
                         Terms & Conditions
                     </h2>
-                    <div className="text-sm text-gray-500 font-bold space-y-4 max-h-[50vh] overflow-y-auto pr-2">
+                    <div className="text-sm text-gray-500 font-bold space-y-4 max-h-[50dvh] overflow-y-auto pr-2">
                         <p>Privacy Policy & Terms of Use for Life Sorted 3D.</p>
                         <p>Your data stays secure and will only be used for providing personalized life planning insights.</p>
                     </div>

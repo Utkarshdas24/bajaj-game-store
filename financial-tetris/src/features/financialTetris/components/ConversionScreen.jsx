@@ -24,6 +24,8 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
     });
     const [errors, setErrors] = useState({});
 
+    const [isTermsOpen, setIsTermsOpen] = useState(false);
+
     const timeSlots = [
         "9:00 AM - 10:00 AM",
         "10:00 AM - 11:00 AM",
@@ -263,6 +265,7 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
                     <form onSubmit={handleBookingSubmit} className="space-y-5">
                         <div className="grid grid-cols-1 gap-4">
                             <div>
+                                <label className="text-sm font-bold text-gray-400 block mb-1 ml-1">Name</label>
                                 <input
                                     id="booking-name"
                                     name="name"
@@ -282,6 +285,7 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
                             </div>
 
                             <div>
+                                <label className="text-sm font-bold text-gray-400 block mb-1 ml-1">Mobile number</label>
                                 <input
                                     id="booking-mobile"
                                     name="mobile_no"
@@ -303,8 +307,9 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
                             </div>
                         </div>
 
-                        <div className="flex gap-2">
-                            <div className="relative flex-1">
+                        <div className="w-full">
+                            <label className="text-sm font-bold text-gray-400 block mb-1 ml-1">Preferred Date</label>
+                            <div className="relative w-full">
                                 <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
                                 <input
                                     id="booking-date"
@@ -317,43 +322,54 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
                                         setBookingData(prev => ({ ...prev, date: e.target.value }));
                                         setErrors(prev => ({ ...prev, date: null }));
                                     }}
-                                    className={`w-full bg-slate-900 border-2 rounded-2xl pl-11 pr-4 py-3 text-white font-bold focus:outline-none focus:border-blue-500 transition-colors ${errors.date ? 'border-red-500' : 'border-slate-800'}`}
+                                    className={`w-full block bg-slate-900 border-2 rounded-2xl pl-11 pr-4 py-3 text-white font-bold focus:outline-none focus:border-blue-500 transition-colors min-h-[52px] ${errors.date ? 'border-red-500' : 'border-slate-800'}`}
                                 />
                                 {errors.date && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.date}</p>}
                             </div>
                         </div>
 
-                        <div className="relative">
-                            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
-                            <select
-                                id="booking-slot"
-                                name="timeSlot"
-                                value={bookingData.timeSlot}
-                                onChange={(e) => {
-                                    setBookingData(prev => ({ ...prev, timeSlot: e.target.value }));
-                                    setErrors(prev => ({ ...prev, timeSlot: null }));
-                                }}
-                                className={`w-full bg-slate-900 border-2 rounded-2xl pl-11 pr-10 py-3 text-white font-bold focus:outline-none focus:border-blue-500 appearance-none transition-colors ${errors.timeSlot ? 'border-red-500' : 'border-slate-800'}`}
-                            >
-                                <option value="" className="bg-slate-950">Choose a slot</option>
-                                {timeSlots.map(slot => (
-                                    <option key={slot} value={slot} className="bg-slate-950">{slot}</option>
-                                ))}
-                            </select>
-                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                        <div className="relative w-full">
+                            <label className="text-sm font-bold text-gray-400 block mb-1 ml-1">Preferred Slot</label>
+                            <div className="relative w-full">
+                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none z-10" />
+                                <select
+                                    id="booking-slot"
+                                    name="timeSlot"
+                                    value={bookingData.timeSlot}
+                                    onChange={(e) => {
+                                        setBookingData(prev => ({ ...prev, timeSlot: e.target.value }));
+                                        setErrors(prev => ({ ...prev, timeSlot: null }));
+                                    }}
+                                    className={`w-full block bg-slate-900 border-2 rounded-2xl pl-11 pr-10 py-3 text-white font-bold focus:outline-none focus:border-blue-500 appearance-none transition-colors min-h-[52px] ${errors.timeSlot ? 'border-red-500' : 'border-slate-800'}`}
+                                >
+                                    <option value="" className="bg-slate-950">Choose a slot</option>
+                                    {timeSlots.map(slot => (
+                                        <option key={slot} value={slot} className="bg-slate-950">{slot}</option>
+                                    ))}
+                                </select>
+                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none z-10" />
+                            </div>
                             {errors.timeSlot && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.timeSlot}</p>}
                         </div>
 
-                        <div className="flex flex-col gap-2">
-                            <div className="flex items-start gap-3 cursor-pointer" onClick={() => setBookingTermsAccepted(!bookingTermsAccepted)}>
-                                <div className={`shrink-0 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all ${bookingTermsAccepted ? 'bg-green-600 border-green-600' : 'border-slate-800 bg-slate-900'}`}>
-                                    {bookingTermsAccepted && <ShieldCheck className="w-5 h-5 text-white" />}
+                        <div className="flex flex-col gap-2 py-1">
+                            <div className="flex items-start gap-3 cursor-pointer" onClick={() => { setBookingTermsAccepted(!bookingTermsAccepted); setErrors(prev => ({ ...prev, terms: null })) }}>
+                                <div className={`mt-0.5 shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${bookingTermsAccepted ? 'bg-green-600 border-green-600' : 'border-slate-800 bg-slate-900'}`}>
+                                    {bookingTermsAccepted && <ShieldCheck className="w-4 h-4 text-white" />}
                                 </div>
-                                <div className="text-sm text-gray-500 font-bold leading-tight">
-                                    I accept the terms & conditions and acknowledge the privacy policy.
+                                <div className="text-xs text-slate-400 font-bold leading-tight">
+                                    I agree to the{' '}
+                                    <button
+                                        type="button"
+                                        onClick={(e) => { e.stopPropagation(); setIsTermsOpen(true); }}
+                                        className="text-[#0066B2] underline cursor-pointer hover:text-[#004C85]"
+                                    >
+                                        Terms & Conditions
+                                    </button>
+                                    {' '}and allow Bajaj Life Insurance to contact me even if registered on DND.
                                 </div>
                             </div>
-                            {errors.terms && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.terms}</p>}
+                            {errors.terms && <p className="text-red-500 text-xs font-bold mt-1 ml-1">{errors.terms}</p>}
                         </div>
 
                         <button
@@ -364,6 +380,35 @@ const ConversionScreen = ({ score, total = 2000, leadData, onRestart, onBookSlot
                             {isSubmitting ? 'Booking...' : 'Confirm booking'}
                         </button>
                     </form>
+                </div>
+            </Modal>
+
+            {/* Terms Modal */}
+            <Modal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)}>
+                <div className="bg-white rounded-[32px] p-8 w-full shadow-2xl relative max-w-sm mx-auto">
+                    <div className="flex justify-between items-center mb-4 border-b-2 border-slate-100 pb-2">
+                        <h3 className="text-[#0066B2] text-xl font-black uppercase tracking-tight">
+                            Terms & Conditions
+                        </h3>
+                        <button
+                            onClick={() => setIsTermsOpen(false)}
+                            className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+                    <div className="max-h-[60vh] overflow-y-auto space-y-4 pr-2 text-slate-600 font-bold text-xs min-[375px]:text-sm leading-relaxed scrollbar-thin scrollbar-thumb-slate-200 text-left">
+                        <p>I hereby authorize Bajaj Life Insurance Limited to call me on the contact number made available by me on the website with a specific request to call back. I further declare that, irrespective of my contact number being registered on National Customer Preference Register (NCPR) or on National Do Not Call Registry (NDNC), any call made, SMS or WhatsApp sent in response to my request shall not be construed as an Unsolicited Commercial Communication even though the content of the call may be for the purposes of explaining various insurance products and services or solicitation and procurement of insurance business.</p>
+                        <p>Please refer to <a href="https://www.bajajallianzlife.com/privacy-policy.html" target="_blank" rel="noopener noreferrer" className="text-[#0066B2] underline">BALIC Privacy Policy</a>.</p>
+                    </div>
+                    <div className="mt-6">
+                        <button
+                            onClick={() => { setIsTermsOpen(false); setBookingTermsAccepted(true); }}
+                            className="w-full mt-6 py-3 bg-[#0066B2] text-white font-bold rounded-lg hover:bg-blue-700 transition-colors text-sm uppercase tracking-wider"
+                        >
+                            I Agree
+                        </button>
+                    </div>
                 </div>
             </Modal>
         </motion.div>
