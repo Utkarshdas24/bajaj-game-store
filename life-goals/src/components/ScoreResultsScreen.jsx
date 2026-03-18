@@ -113,7 +113,11 @@ const ScoreResultsScreen = ({ score, userName, userPhone, onBookSlot, onRestart 
         } else if (!/^[A-Za-z\s]+$/.test(formData.name.trim())) {
             errs.name = "Invalid name (letters only)";
         }
-        if (!isValidPhone(formData.mobile)) errs.mobile = "Invalid Mobile Number";
+        if (!formData.mobile.trim()) {
+            errs.mobile = "Mobile Number is required";
+        } else if (!isValidPhone(formData.mobile)) {
+            errs.mobile = "Enter a valid Mobile Number";
+        }
         if (!formData.date) errs.date = "Preferred Date is required";
         if (!formData.time) errs.time = "Preferred Time is required";
         setErrors(errs);
@@ -208,7 +212,7 @@ const ScoreResultsScreen = ({ score, userName, userPhone, onBookSlot, onRestart 
             <div className="results-container ghibli-content justify-between sm:justify-center py-4 sm:py-8 min-h-0">
 
                 {/* Header Section - Heading above speedometer */}
-                <div className="results-header text-center mb-3 sm:mb-4 shrink-0">
+                <div className="results-header text-center mb-3 sm:mb-4 shrink-0 mt-4 sm:mt-8">
                     {/* Heading Text - Above Speedometer - Two lines */}
                     <h1 className="results-title text-base sm:text-lg md:text-xl font-medium text-white uppercase tracking-wide italic mb-2">
                         Hi <span className="ml-1 text-2xl sm:text-3xl md:text-4xl font-black">{userName || 'Bajaj'}!</span>
@@ -281,11 +285,10 @@ const ScoreResultsScreen = ({ score, userName, userPhone, onBookSlot, onRestart 
                     </p>
                 </div>
 
-                {/* Restart Option */}
                 <div className="restart-container shrink-0 text-center pb-4">
                     <button
                         onClick={onRestart}
-                        className="text-blue-100 hover:text-white text-sm sm:text-lg font-black uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-3 mx-auto drop-shadow-md py-4 px-8 bg-white/5 hover:bg-white/10 rounded-xl"
+                        className="text-blue-100 hover:text-white text-sm sm:text-lg font-black uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-3 mx-auto drop-shadow-md pb-2"
                     >
                         <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6" /> Retake Quiz
                     </button>
@@ -347,11 +350,11 @@ const ScoreResultsScreen = ({ score, userName, userPhone, onBookSlot, onRestart 
                                             updateField('mobile', val);
 
                                             if (!val.trim()) {
-                                                setErrors(p => ({ ...p, mobile: "Mobile is required" }));
+                                                setErrors(p => ({ ...p, mobile: "Mobile Number is required" }));
                                             } else if (val.length > 0 && !/^[6-9]/.test(val)) {
-                                                setErrors(p => ({ ...p, mobile: "Must start with 6-9" }));
+                                                setErrors(p => ({ ...p, mobile: "Enter a valid Mobile Number" }));
                                             } else if (val.length > 0 && val.length < 10) {
-                                                setErrors(p => ({ ...p, mobile: "Enter 10 digits" }));
+                                                setErrors(p => ({ ...p, mobile: "Enter a valid Mobile Number" }));
                                             } else {
                                                 setErrors(p => ({ ...p, mobile: null }));
                                             }

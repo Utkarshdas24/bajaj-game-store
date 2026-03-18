@@ -295,15 +295,11 @@ const WelcomeScreen = ({
 
                 {/* Footer Section - Better margins */}
                 <div className="w-full relative z-40 flex flex-col items-center gap-2 min-[375px]:gap-3 shrink-0 py-2">
-                    <h3 className="text-white text-sm min-[375px]:text-base sm:text-lg md:text-xl font-black drop-shadow-xl text-center leading-tight">
-                        Measure your Life Goals preparedness
-                    </h3>
-
                     <button
                         onClick={handleStartClick}
-                        className="btn-primary-3d w-full max-w-[240px] min-[375px]:max-w-[260px] sm:max-w-[340px] !py-3 sm:!py-5 !text-lg sm:!text-xl mt-1"
+                        className="btn-primary-3d w-auto px-8 min-[375px]:px-10 sm:w-full sm:max-w-[340px] !py-3 sm:!py-5 !text-base min-[375px]:!text-lg sm:!text-xl mt-1 whitespace-nowrap"
                     >
-                        Check Now
+                        Check Your Score
                     </button>
                 </div>
             </div>

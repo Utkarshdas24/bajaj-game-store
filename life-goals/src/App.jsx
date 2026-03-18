@@ -7,7 +7,6 @@ import './index.css';
 // Lazy load screens for performance optimization
 const WelcomeScreen = lazy(() => import('./components/WelcomeScreen'));
 const GoalSelectionScreen = lazy(() => import('./components/GoalSelectionScreen'));
-const CountdownScreen = lazy(() => import('./components/CountdownScreen'));
 const GoalAssessmentScreen = lazy(() => import('./components/GoalAssessmentScreen'));
 const ScoreResultsScreen = lazy(() => import('./components/ScoreResultsScreen'));
 const ThankYouScreen = lazy(() => import('./components/ThankYouScreen'));
@@ -98,8 +97,6 @@ function App() {
                 );
             case SCREENS.GOAL_SELECTION:
                 return <GoalSelectionScreen key="goal-selection" onProceed={handleGoalsSelected} />;
-            case SCREENS.COUNTDOWN:
-                return <CountdownScreen key="countdown" userName={leadName} onComplete={handleCountdownComplete} />;
             case SCREENS.ASSESSMENT:
                 return selectedGoals.length > 0 && (
                     <GoalAssessmentScreen

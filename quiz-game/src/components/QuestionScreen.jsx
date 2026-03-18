@@ -16,7 +16,11 @@ const QuestionScreen = ({ question, currentQuestion, totalQuestions, onAnswerSel
         >
             {/* Top Navigation / Progress */}
             <div className="mb-4 sm:mb-6">
-                <QuizProgressBar currentQuestion={currentQuestion} totalQuestions={totalQuestions} />
+                <QuizProgressBar
+                    currentQuestion={currentQuestion}
+                    totalQuestions={totalQuestions}
+                    selectedAnswer={selectedAnswer}
+                />
             </div>
 
             <div className="flex-1 flex flex-col justify-center space-y-4 sm:space-y-6 px-2 max-w-md mx-auto w-full min-h-0">

@@ -253,12 +253,9 @@ const ResultsScreen = ({ score, total, onRestart }) => {
                                     <X className="w-6 h-6" />
                                 </button>
 
-                                <Dialog.Title className="text-3xl font-black text-gray-800 text-center mb-1 tracking-tight">
-                                    Book a slot
+                                <Dialog.Title className="text-xl sm:text-2xl font-black text-gray-800 text-center mb-6 tracking-tight pr-6 whitespace-nowrap">
+                                    Book a convenient slot
                                 </Dialog.Title>
-                                <p className="text-center text-gray-400 font-bold mb-8 text-sm">
-                                    Pick your preferred time
-                                </p>
 
                                 <form onSubmit={handleSubmit} className="space-y-5">
                                     <div className="grid grid-cols-1 gap-4">
@@ -306,43 +303,49 @@ const ResultsScreen = ({ score, total, onRestart }) => {
                                     </div>
 
                                     <div className="flex flex-col gap-4">
-                                        <div className="relative">
-                                            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
-                                            <input
-                                                type="date"
-                                                id="booking-date"
-                                                name="date"
-                                                value={bookingData.date}
-                                                min={today}
-                                                max={maxDate}
-                                                onChange={(e) => {
-                                                    setBookingData(prev => ({ ...prev, date: e.target.value }));
-                                                    setErrors(prev => ({ ...prev, date: null }));
-                                                }}
-                                                className={`block w-full min-h-[52px] bg-gray-50 border-2 rounded-2xl pl-11 pr-4 py-3 text-gray-800 font-bold focus:outline-none transition-colors appearance-none ${errors.date ? 'border-red-500' : 'border-slate-100 focus:border-blue-400'}`}
-                                            />
-                                            {errors.date && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.date}</p>}
+                                        <div className="space-y-1">
+                                            <label htmlFor="booking-date" className="text-sm font-bold text-gray-500 block text-left mb-1 ml-1">Booking Date</label>
+                                            <div className="relative">
+                                                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
+                                                <input
+                                                    type="date"
+                                                    id="booking-date"
+                                                    name="date"
+                                                    value={bookingData.date}
+                                                    min={today}
+                                                    max={maxDate}
+                                                    onChange={(e) => {
+                                                        setBookingData(prev => ({ ...prev, date: e.target.value }));
+                                                        setErrors(prev => ({ ...prev, date: null }));
+                                                    }}
+                                                    className={`block w-full min-h-[52px] bg-gray-50 border-2 rounded-2xl pl-11 pr-4 py-3 text-gray-800 font-bold focus:outline-none transition-colors appearance-none ${errors.date ? 'border-red-500' : 'border-slate-100 focus:border-blue-400'}`}
+                                                />
+                                                {errors.date && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.date}</p>}
+                                            </div>
                                         </div>
 
-                                        <div className="relative">
-                                            <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
-                                            <select
-                                                id="booking-timeslot"
-                                                name="timeSlot"
-                                                value={bookingData.timeSlot}
-                                                onChange={(e) => {
-                                                    setBookingData(prev => ({ ...prev, timeSlot: e.target.value }));
-                                                    setErrors(prev => ({ ...prev, timeSlot: null }));
-                                                }}
-                                                className={`block w-full min-h-[52px] bg-gray-50 border-2 rounded-2xl pl-11 pr-10 py-3 text-gray-800 font-bold focus:outline-none appearance-none transition-colors ${errors.timeSlot ? 'border-red-500' : 'border-slate-100 focus:border-blue-400'}`}
-                                            >
-                                                <option value="">Choose a slot</option>
-                                                {timeSlots.map(slot => (
-                                                    <option key={slot} value={slot}>{slot}</option>
-                                                ))}
-                                            </select>
-                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
-                                            {errors.timeSlot && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.timeSlot}</p>}
+                                        <div className="space-y-1">
+                                            <label htmlFor="booking-timeslot" className="text-sm font-bold text-gray-500 block text-left mb-1 ml-1">Preferred Time Slot</label>
+                                            <div className="relative">
+                                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500 pointer-events-none" />
+                                                <select
+                                                    id="booking-timeslot"
+                                                    name="timeSlot"
+                                                    value={bookingData.timeSlot}
+                                                    onChange={(e) => {
+                                                        setBookingData(prev => ({ ...prev, timeSlot: e.target.value }));
+                                                        setErrors(prev => ({ ...prev, timeSlot: null }));
+                                                    }}
+                                                    className={`block w-full min-h-[52px] bg-gray-50 border-2 rounded-2xl pl-11 pr-10 py-3 text-gray-800 font-bold focus:outline-none appearance-none transition-colors ${errors.timeSlot ? 'border-red-500' : 'border-slate-100 focus:border-blue-400'}`}
+                                                >
+                                                    <option value="">Choose a slot</option>
+                                                    {timeSlots.map(slot => (
+                                                        <option key={slot} value={slot}>{slot}</option>
+                                                    ))}
+                                                </select>
+                                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                                                {errors.timeSlot && <p className="text-red-500 text-xs font-bold mt-1 ml-2">{errors.timeSlot}</p>}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -364,7 +367,7 @@ const ResultsScreen = ({ score, total, onRestart }) => {
                                         disabled={isSubmitting}
                                         className={`w-full py-4 rounded-2xl text-xl font-black text-white transition-all ${isSubmitting ? 'opacity-50' : 'bg-brand-green hover:bg-[#45a049] shadow-[0_4px_0_0_#45a049] active:translate-y-1 active:shadow-none'}`}
                                     >
-                                        {isSubmitting ? 'Booking...' : 'Confirm booking'}
+                                        {isSubmitting ? 'Booking...' : 'Book a slot'}
                                     </motion.button>
                                 </form>
                             </motion.div>

@@ -3,15 +3,8 @@ import { CheckCircle2, XCircle, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from 'react';
 
 const FeedbackScreen = ({ isCorrect, explanation, onNext }) => {
-    const [showNextButton, setShowNextButton] = useState(false);
-
     useEffect(() => {
         const duration = 10000;
-
-        // Show next button after 2 seconds
-        const showButtonTimer = setTimeout(() => {
-            setShowNextButton(true);
-        }, 2000);
 
         // Auto advance after full duration
         const timer = setTimeout(() => {
@@ -19,7 +12,6 @@ const FeedbackScreen = ({ isCorrect, explanation, onNext }) => {
         }, duration);
 
         return () => {
-            clearTimeout(showButtonTimer);
             clearTimeout(timer);
         };
     }, [onNext, isCorrect]);
@@ -65,23 +57,19 @@ const FeedbackScreen = ({ isCorrect, explanation, onNext }) => {
                         </div>
 
                         {/* Action Button */}
-                        <div className="mb-4 sm:mb-6 shrink-0 min-h-[56px] sm:min-h-[64px]">
-                            <AnimatePresence>
-                                {showNextButton && (
-                                    <motion.button
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0 }}
-                                        onClick={onNext}
-                                        className={`w-full font-black py-3 sm:py-4 px-6 rounded-2xl transition-all active:scale-[0.98] text-lg sm:text-xl h-full ${isCorrect
-                                            ? 'bg-brand-blue text-white'
-                                            : 'bg-red-500 text-white'
-                                            }`}
-                                    >
-                                        Next
-                                    </motion.button>
-                                )}
-                            </AnimatePresence>
+                        <div className="mb-4 sm:mb-6 shrink-0 h-[56px] sm:h-[64px] relative">
+                            <motion.button
+                                initial={{ opacity: 0, y: 10, pointerEvents: "none" }}
+                                animate={{ opacity: 1, y: 0, pointerEvents: "auto" }}
+                                transition={{ delay: 2, duration: 0.3 }}
+                                onClick={onNext}
+                                className={`w-full absolute inset-0 font-black py-3 sm:py-4 px-6 rounded-2xl transition-all active:scale-[0.98] text-lg sm:text-xl h-full flex items-center justify-center ${isCorrect
+                                    ? 'bg-brand-blue text-white'
+                                    : 'bg-red-500 text-white'
+                                    }`}
+                            >
+                                Next
+                            </motion.button>
                         </div>
 
                         {/* Progress Capsule */}

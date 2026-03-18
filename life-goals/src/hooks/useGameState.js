@@ -72,8 +72,9 @@ export const useGameState = () => {
         setSelectedGoals(goals);
         setCurrentGoalIndex(0);
         setCurrentQuestionIndex(0);
-        setCurrentScreen(SCREENS.COUNTDOWN);
-    }, []);
+        setCurrentScreen(SCREENS.ASSESSMENT);
+        startGameTimer();
+    }, [startGameTimer]);
 
     const handleCountdownComplete = useCallback(() => {
         setCurrentScreen(SCREENS.ASSESSMENT);
